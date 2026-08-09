@@ -78,7 +78,7 @@ export function ParticleField({
       }
       positions.set([x, y, z], i * 3);
       seeds[i] = Math.random() * Math.PI * 2;
-      const c = palette[i % palette.length].clone().lerp(new THREE.Color(0xffffff), 0.25);
+      const c = palette[i % palette.length]!.clone().lerp(new THREE.Color(0xffffff), 0.25);
       colors.set([c.r, c.g, c.b], i * 3);
     }
 
@@ -117,9 +117,9 @@ export function ParticleField({
       const t = clock.getElapsedTime();
       if (variant === "wave") {
         for (let i = 0; i < count; i++) {
-          const x = base[i * 3];
-          const z = base[i * 3 + 2];
-          attr.setY(i, base[i * 3 + 1] + Math.sin(x * 0.4 + t * 0.9 + z * 0.3) * 0.7);
+          const x = base[i * 3]!;
+          const z = base[i * 3 + 2]!;
+          attr.setY(i, base[i * 3 + 1]! + Math.sin(x * 0.4 + t * 0.9 + z * 0.3) * 0.7);
         }
         attr.needsUpdate = true;
       } else if (variant === "swirl") {
