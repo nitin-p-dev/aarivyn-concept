@@ -1,24 +1,48 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { AmbientCanvas } from "@/components/aarivyn/ParticleField";
+import { Nav, Hero } from "@/components/aarivyn/Hero";
+import { Thesis, Lab } from "@/components/aarivyn/ThesisLab";
+import { Services } from "@/components/aarivyn/Services";
+import { Collective, Members } from "@/components/aarivyn/Collective";
+import { Forge, Hackathon } from "@/components/aarivyn/Forge";
+import { Gigs, Vault, SiteFooter } from "@/components/aarivyn/Vault";
 
-// No head() here: the home route inherits title/description/og/twitter from
-// __root.tsx, and ships no og:image so serve-time hosting can inject the
-// project's social preview (explicit og:image or latest screenshot).
+const title = "AARIVYN ONE — Deep-tech research & delivery collective";
+const description =
+  "A collective of researchers, builders, and visionaries architecting deep-tech systems — from cutting-edge research to production systems that scale.";
+
 export const Route = createFileRoute("/")({
+  head: () => ({
+    meta: [
+      { title },
+      { name: "description", content: description },
+      { property: "og:title", content: title },
+      { property: "og:description", content: description },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
+    ],
+  }),
   component: Index,
 });
 
-// IMPORTANT: Replace this placeholder. See ./README.md for routing conventions.
 function Index() {
   return (
-    <div
-      className="flex min-h-screen items-center justify-center"
-      style={{ backgroundColor: "#fcfbf8" }}
-    >
-      <img
-        data-lovable-blank-page-placeholder="REMOVE_THIS"
-        src="https://cdn.gpteng.co/blank-app-v1.svg"
-        alt="Your app will live here!"
-      />
-    </div>
+    <>
+      <AmbientCanvas />
+      <Nav />
+      <main>
+        <Hero />
+        <Thesis />
+        <Lab />
+        <Services />
+        <Collective />
+        <Members />
+        <Forge />
+        <Hackathon />
+        <Gigs />
+        <Vault />
+      </main>
+      <SiteFooter />
+    </>
   );
 }
