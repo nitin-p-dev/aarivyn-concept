@@ -124,19 +124,136 @@ export const squads = [
 
 
 export const bounties = [
-  { amount: "$4,500", title: "CUDA kernel optimisation", scope: "Performance", days: "12 days left" },
-  { amount: "$8,000", title: "L2 Bridge Audit", scope: "Security", days: "9 days left" },
-  { amount: "$6,000", title: "K8s Operator", scope: "Infrastructure", days: "18 days left" },
-  { amount: "$3,200", title: "Telemetry pipeline", scope: "Data", days: "6 days left" },
-  { amount: "$5,500", title: "Raft implementation", scope: "Distributed", days: "21 days left" },
-  { amount: "$4,200", title: "PCB Layout", scope: "Hardware", days: "14 days left" },
+  { amount: "$4,500", title: "CUDA Kernel Optimization", scope: "Performance", days: "12 days left", skill: "AI Mesh" },
+  { amount: "$8,000", title: "L2 Bridge Security Audit", scope: "Security", days: "9 days left", skill: "Cryptography" },
+  { amount: "$6,000", title: "K8s GPU Controller", scope: "Infrastructure", days: "18 days left", skill: "Backend" },
+  { amount: "$3,200", title: "Telemetry Dashboard", scope: "Data", days: "6 days left", skill: "UI/UX" },
+  { amount: "$5,500", title: "Raft Consensus in Rust", scope: "Distributed", days: "21 days left", skill: "Distributed Systems" },
+  { amount: "$4,200", title: "Edge AI PCB Layout", scope: "Hardware", days: "14 days left", skill: "Hardware" },
 ];
 
+export const resourceFilters = ["All Types", "Roadmap", "Snippet", "Paper"];
+
 export const resources = [
-  { type: "Roadmaps", title: "Applied ML Engineer Roadmap", meta: "12 stages · updated weekly" },
-  { type: "Roadmaps", title: "Distributed Systems Roadmap", meta: "9 stages · consensus focused" },
-  { type: "Snippets", title: "CUDA Warp Reduction Snippets", meta: "24 snippets · benchmarked" },
-  { type: "Snippets", title: "Kubernetes Operator Scaffolds", meta: "11 snippets · Go" },
-  { type: "Research Papers", title: "Sparse Attention at Edge Scale", meta: "AARIVYN Lab · 2026" },
-  { type: "Research Papers", title: "Verifiable Bridges: A Survey", meta: "AARIVYN Lab · 2025" },
+  { type: "Roadmap", title: "Deep Learning Roadmap 2025", meta: "12 stages · updated weekly", domain: "AI & Neural Systems" },
+  { type: "Paper", title: "Post-Quantum Cryptography Primer", meta: "AARIVYN Lab · 2026", domain: "Cryptography & Security" },
+  { type: "Snippet", title: "Distributed Consensus Snippet Pack", meta: "24 snippets · benchmarked", domain: "Distributed Systems" },
+  { type: "Roadmap", title: "Kubernetes GPU Scheduling Guide", meta: "9 stages · operator focused", domain: "Agency & Infrastructure" },
+  { type: "Snippet", title: "WebGL Shader Patterns", meta: "18 snippets · GLSL", domain: "UI/UX" },
+  { type: "Paper", title: "Hardware-Software Co-Design Paper", meta: "AARIVYN Lab · 2025", domain: "Hardware" },
+];
+
+export const skillTags = [
+  "UI/UX",
+  "Backend",
+  "Hardware",
+  "AI Mesh",
+  "Cryptography",
+  "Distributed Systems",
+];
+
+export const interestAreas = ["Startups", "Research", "Freelance"];
+
+export const pillarDossiers: Record<string, { summary: string; points: string[] }> = {
+  Research: {
+    summary:
+      "Every stream starts from first principles and ends in a published artefact the collective can build on.",
+    points: [
+      "24 active streams across AI, quantum and distributed systems",
+      "Weekly peer review with stream leads",
+      "Findings published to the Resource Vault under author credit",
+    ],
+  },
+  Talent: {
+    summary:
+      "A directory of 180+ builders mapped by domain, matched to nodes, squads and paid bounties.",
+    points: [
+      "Skill-tagged profiles routed to forge nodes",
+      "Mentorship pairings inside each research stream",
+      "Bounty income routed from client engagements",
+    ],
+  },
+  Delivery: {
+    summary:
+      "Client work runs through the same engineering standard as the lab: measured, versioned, handed over.",
+    points: [
+      "Three fixed tracks with transparent scoping",
+      "TRL-graded readiness before any production handover",
+      "Post-delivery infrastructure ownership plan",
+    ],
+  },
+};
+
+export const researchStreams = [
+  { name: "Sparse Attention Kernels", domain: "AI", lead: "Dr. Rajesh Kapoor" },
+  { name: "Neuromorphic Vision Stack", domain: "AI", lead: "Amara Diallo" },
+  { name: "Edge Model Distillation", domain: "AI", lead: "Dr. Elara Voss" },
+  { name: "Post-Quantum Key Exchange", domain: "Quantum", lead: "Dr. Mira Okafor" },
+  { name: "Quantum Error Mitigation", domain: "Quantum", lead: "Dr. Alex Vance" },
+  { name: "Lattice Signature Benchmarks", domain: "Quantum", lead: "Dr. Yuki Tanaka" },
+  { name: "Raft Consensus Variants", domain: "Distributed", lead: "Kenji Nakamura" },
+  { name: "Swarm Telemetry Fabric", domain: "Distributed", lead: "Priya Sharma" },
+  { name: "Deterministic Build Farm", domain: "Distributed", lead: "Marcus Chen" },
+];
+
+export const deployments = [
+  { name: "Community GPU Cluster", trl: "TRL 6", client: "Internal · 180 members" },
+  { name: "Autonomous UAV Payload Lab", trl: "TRL 5", client: "Defence research partner" },
+  { name: "OptiSight Inline AOI", trl: "TRL 5", client: "Electronics manufacturer" },
+  { name: "Telemetry Ingest Fabric", trl: "TRL 6", client: "Mobility platform" },
+  { name: "ZK Bridge Monitor", trl: "TRL 5", client: "L2 protocol team" },
+];
+
+export const agencyBriefs = [
+  { org: "Nordic Robotics Group", track: "Track 01 · Intelligence System Build", status: "In delivery" },
+  { org: "Helix Bio Compute", track: "Track 02 · Research Sprint", status: "Discovery" },
+  { org: "Atlas Grid Energy", track: "Track 03 · Infrastructure Audit", status: "Scoping" },
+];
+
+export const memberSkillGroups = [
+  { group: "AI & Neural Systems", count: 62 },
+  { group: "Cryptography & Security", count: 38 },
+  { group: "Distributed Systems", count: 44 },
+  { group: "Agency & Infrastructure", count: 36 },
+];
+
+export const forgeNeeds: Record<string, string[]> = {
+  "NODE-GX1A": ["Hardware", "Distributed Systems"],
+  "NODE-0X28": ["AI Mesh", "Backend"],
+  "NODE-0X3C": ["Cryptography", "Backend"],
+  "NODE-0X40": ["Distributed Systems", "Hardware"],
+  "NODE-0X5E": ["AI Mesh", "Hardware"],
+  "NODE-0X6F": ["Backend", "Distributed Systems"],
+};
+
+export const hackathonEvents = [
+  { name: "QuantumHack 2025", window: "12-14 Sep", focus: "Quantum simulation & PQC" },
+  { name: "Edge AI Buildathon", window: "03-05 Oct", focus: "On-device inference" },
+  { name: "Decentralized Systems Hack", window: "21-23 Nov", focus: "Consensus & rollups" },
+];
+
+export const coreMemberFilters = ["All Members", "Research Leads", "Core Tech"];
+
+export const coreMembers = [
+  {
+    name: "Dr. Elara Voss",
+    title: "Lead AI Researcher",
+    group: "Research Leads",
+    domain: "AI & Neural Systems",
+    bio: "Leads the neural systems streams, from sparse attention kernels to edge distillation.",
+  },
+  {
+    name: "Kenji Nakamura",
+    title: "Distributed Systems Architect",
+    group: "Core Tech",
+    domain: "Distributed Systems",
+    bio: "Designs the consensus and telemetry fabric behind AARIVYN deployments.",
+  },
+  {
+    name: "Sofia Reyes",
+    title: "Web Admin & Infrastructure Lead",
+    group: "Core Tech",
+    domain: "Agency & Infrastructure",
+    bio: "Owns platform reliability, the vault and the collective's delivery infrastructure.",
+  },
 ];

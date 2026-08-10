@@ -2,6 +2,7 @@ import { useState } from "react";
 import { members, memberFilters } from "@/data/aarivyn";
 import { Section, SectionHeading } from "./Section";
 import { ParticleField } from "./ParticleField";
+import { JoinModal, ClientBriefModal, InfoModal } from "./modals";
 
 function initials(name: string) {
   return name
@@ -85,15 +86,18 @@ function PersonaCard({
           </li>
         ))}
       </ul>
-      <button
-        className={`mt-6 w-full rounded-full px-5 py-2.5 text-sm font-semibold text-card transition-transform hover:-translate-y-0.5 ${
-          accent
-            ? "bg-gradient-to-r from-agency to-agency-alt"
-            : "bg-gradient-to-r from-collective to-collective-alt"
-        }`}
-      >
-        {cta}
-      </button>
+      {accent ? (
+        <ClientBriefModal
+          trigger={cta}
+          triggerClassName="mt-6 w-full rounded-full bg-gradient-to-r from-agency to-agency-alt px-5 py-2.5 text-sm font-semibold text-card transition-transform hover:-translate-y-0.5"
+        />
+      ) : (
+        <JoinModal
+          title="Join Collective"
+          trigger={cta}
+          triggerClassName="mt-6 w-full rounded-full bg-gradient-to-r from-collective to-collective-alt px-5 py-2.5 text-sm font-semibold text-card transition-transform hover:-translate-y-0.5"
+        />
+      )}
     </div>
   );
 }
@@ -148,13 +152,17 @@ export function Members() {
             <span className="mt-4 inline-block rounded-full border border-collective/35 bg-collective/10 px-3 py-1 text-[11px] text-foreground">
               {m.domain}
             </span>
-            <div className="mt-4 flex gap-3 text-xs text-muted-foreground">
-              {["Profile", "GitHub", "LinkedIn"].map((s) => (
-                <a key={s} href="#members" className="transition-colors hover:text-foreground">
-                  {s}
-                </a>
-              ))}
-            </div>
+            <InfoModal
+              title={m.name}
+              description={`${m.title} · ${m.domain}`}
+              triggerClassName="mt-5 w-full rounded-full border border-border bg-background/70 px-5 py-2.5 text-sm font-semibold text-foreground transition-colors hover:bg-card"
+              trigger="View Profile"
+            >
+              <p className="text-sm text-muted-foreground">
+                {m.name} works across {m.domain.toLowerCase()} streams inside AARIVYN ONE, pairing
+                research output with production delivery.
+              </p>
+            </InfoModal>
           </article>
         ))}
       </div>

@@ -1,9 +1,21 @@
 import { useState } from "react";
-import { bounties, resources } from "@/data/aarivyn";
+import {
+  bounties,
+  resources,
+  resourceFilters,
+  skillTags,
+  coreMembers,
+  coreMemberFilters,
+} from "@/data/aarivyn";
 import { Section, SectionHeading } from "./Section";
+import { ParticleField } from "./ParticleField";
 import { Input } from "@/components/ui/input";
+import { ApplyModal, InfoModal } from "./modals";
 
 export function Gigs() {
+  const [skill, setSkill] = useState("All Skills");
+  const shown = bounties.filter((b) => skill === "All Skills" || b.skill === skill);
+
   return (
     <Section id="gigs">
       <SectionHeading
@@ -13,8 +25,25 @@ export function Gigs() {
         copy="Paid, scoped work routed from client engagements into the collective."
         accent="agency"
       />
-      <div className="mt-14 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
-        {bounties.map((b, i) => (
+
+      <div className="mt-10 flex flex-wrap gap-2">
+        {["All Skills", ...skillTags].map((f) => (
+          <button
+            key={f}
+            onClick={() => setSkill(f)}
+            className={`rounded-full border px-4 py-2 text-xs font-medium transition-colors ${
+              skill === f
+                ? "border-transparent bg-gradient-to-r from-agency to-agency-alt text-card"
+                : "border-border bg-card/70 text-muted-foreground hover:text-foreground"
+            }`}
+          >
+            {f}
+          </button>
+        ))}
+      </div>
+
+      <div className="mt-8 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+        {shown.map((b, i) => (
           <div key={b.title} className="relative" style={{ perspective: "1200px" }}>
             <span className="absolute inset-x-3 -bottom-2 h-full rounded-2xl border border-border/60 bg-card/40" />
             <article
@@ -31,9 +60,21 @@ export function Gigs() {
                 </span>
                 <span className="font-mono">{b.days}</span>
               </div>
+              <ApplyModal
+                channel="bounty-apply"
+                title={`Apply · ${b.title}`}
+                description={`${b.amount} · ${b.scope} · ${b.days}`}
+                context={{ bounty: b.title, amount: b.amount }}
+                roles={[b.skill]}
+                trigger="Apply Directive"
+                triggerClassName="mt-5 w-full rounded-full border border-border bg-background/70 px-5 py-2.5 text-sm font-semibold text-foreground transition-colors hover:bg-card"
+              />
             </article>
           </div>
         ))}
+        {shown.length === 0 ? (
+          <p className="text-sm text-muted-foreground">No bounties match that skill.</p>
+        ) : null}
       </div>
     </Section>
   );
@@ -53,11 +94,17 @@ function VaultCube() {
 
 export function Vault() {
   const [q, setQ] = useState("");
-  const filtered = resources.filter(
-    (r) =>
-      r.title.toLowerCase().includes(q.toLowerCase()) ||
-      r.type.toLowerCase().includes(q.toLowerCase()),
-  );
+  const [type, setType] = useState("All Types");
+  const filtered = resources.filter((r) => {
+    const matchesType = type === "All Types" || r.type === type;
+    const needle = q.toLowerCase();
+    return (
+      matchesType &&
+      (r.title.toLowerCase().includes(needle) ||
+        r.type.toLowerCase().includes(needle) ||
+        r.domain.toLowerCase().includes(needle))
+    );
+  });
 
   return (
     <Section id="vault">
@@ -82,6 +129,22 @@ export function Vault() {
         />
       </div>
 
+      <div className="mt-4 flex flex-wrap gap-2">
+        {resourceFilters.map((f) => (
+          <button
+            key={f}
+            onClick={() => setType(f)}
+            className={`rounded-full border px-4 py-2 text-xs font-medium transition-colors ${
+              type === f
+                ? "border-transparent bg-gradient-to-r from-research-alt to-research text-card"
+                : "border-border bg-card/70 text-muted-foreground hover:text-foreground"
+            }`}
+          >
+            {f}
+          </button>
+        ))}
+      </div>
+
       <div className="mt-8 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
         {filtered.map((r) => (
           <article key={r.title} className="glass-card p-5 hover:-translate-y-1">
@@ -90,6 +153,9 @@ export function Vault() {
             </span>
             <h3 className="mt-3 text-base font-semibold text-foreground">{r.title}</h3>
             <p className="mt-2 text-xs text-muted-foreground">{r.meta}</p>
+            <span className="mt-4 inline-block rounded-full border border-border bg-background/70 px-3 py-1 text-[11px] text-muted-foreground">
+              {r.domain}
+            </span>
           </article>
         ))}
         {filtered.length === 0 ? (
@@ -97,6 +163,76 @@ export function Vault() {
         ) : null}
       </div>
     </Section>
+  );
+}
+
+export function CoreMembers() {
+  const [filter, setFilter] = useState("All Members");
+  const shown = coreMembers.filter((m) => filter === "All Members" || m.group === filter);
+
+  return (
+    <section id="core-team" className="relative overflow-hidden px-6 py-24">
+      <div className="pointer-events-none absolute inset-0 opacity-50">
+        <ParticleField variant="sphere" count={900} opacity={0.55} className="h-full w-full" />
+      </div>
+      <div className="relative mx-auto max-w-7xl">
+        <SectionHeading
+          index="10"
+          eyebrow="Core Members"
+          title="CORE MEMBERS"
+          copy="The builders and researchers driving AARIVYN forward."
+          accent="collective"
+        />
+
+        <div className="mt-10 flex flex-wrap gap-2">
+          {coreMemberFilters.map((f) => (
+            <button
+              key={f}
+              onClick={() => setFilter(f)}
+              className={`rounded-full border px-4 py-2 text-xs font-medium transition-colors ${
+                filter === f
+                  ? "border-transparent bg-gradient-to-r from-collective to-collective-alt text-card"
+                  : "border-border bg-card/70 text-muted-foreground hover:text-foreground"
+              }`}
+            >
+              {f}
+            </button>
+          ))}
+        </div>
+
+        <div className="mt-8 grid gap-6 md:grid-cols-3">
+          {shown.map((m) => (
+            <article key={m.name} className="glass-card p-6">
+              <div className="flex items-center gap-4">
+                <span className="grid h-14 w-14 place-items-center rounded-full bg-gradient-to-br from-collective to-collective-alt font-display text-base font-bold text-card ring-4 ring-collective/15">
+                  {m.name
+                    .replace(/^Dr\.\s*/, "")
+                    .split(" ")
+                    .map((w) => w[0])
+                    .slice(0, 2)
+                    .join("")}
+                </span>
+                <div>
+                  <h3 className="text-sm font-semibold text-foreground">{m.name}</h3>
+                  <p className="text-xs text-muted-foreground">{m.title}</p>
+                </div>
+              </div>
+              <span className="mt-4 inline-block rounded-full border border-collective/35 bg-collective/10 px-3 py-1 text-[11px] text-foreground">
+                {m.domain}
+              </span>
+              <InfoModal
+                title={m.name}
+                description={`${m.title} · ${m.domain}`}
+                triggerClassName="mt-5 w-full rounded-full border border-border bg-background/70 px-5 py-2.5 text-sm font-semibold text-foreground transition-colors hover:bg-card"
+                trigger="View Profile"
+              >
+                <p className="text-sm text-muted-foreground">{m.bio}</p>
+              </InfoModal>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
   );
 }
 

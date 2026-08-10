@@ -1,16 +1,27 @@
 import { Moon, Sun } from "lucide-react";
 import { ParticleField } from "./ParticleField";
-import { heroMetrics } from "@/data/aarivyn";
+import {
+  heroMetrics,
+  memberSkillGroups,
+  members,
+  researchStreams,
+  deployments,
+  agencyBriefs,
+} from "@/data/aarivyn";
 import { SearchCommand } from "./SearchCommand";
 import { useTheme } from "./theme";
+import { JoinModal, ClientBriefModal, InfoModal } from "./modals";
 
 const links = [
   { href: "#thesis", label: "Thesis" },
-  { href: "#lab", label: "Lab" },
-  { href: "#services", label: "Services" },
+  { href: "#lab", label: "Research" },
+  { href: "#services", label: "Agency" },
   { href: "#collective", label: "Collective" },
   { href: "#forge", label: "Forge" },
+  { href: "#hackathon", label: "LFG" },
+  { href: "#gigs", label: "Gigs" },
   { href: "#vault", label: "Vault" },
+  { href: "#core-team", label: "Core Team" },
 ];
 
 function ThemeToggle() {
@@ -36,7 +47,7 @@ export function Nav() {
             AARIVYN ONE
           </span>
         </a>
-        <nav className="hidden items-center gap-7 lg:flex">
+        <nav className="hidden items-center gap-5 xl:flex">
           {links.map((l) => (
             <a
               key={l.href}
@@ -50,18 +61,97 @@ export function Nav() {
         <div className="flex items-center gap-2">
           <SearchCommand />
           <ThemeToggle />
-          <a
-            href="#services"
-            className="hidden rounded-full bg-foreground px-4 py-2 text-xs font-semibold tracking-wide text-background transition-opacity hover:opacity-90 sm:inline-block"
-          >
-            Bring us a hard problem
-          </a>
+          <JoinModal
+            trigger="Join AARIVYN"
+            triggerClassName="hidden rounded-full bg-foreground px-4 py-2 text-xs font-semibold tracking-wide text-background transition-opacity hover:opacity-90 sm:inline-block"
+          />
         </div>
       </div>
     </header>
   );
 }
 
+function MetricRow({ label, value }: { label: string; value: string }) {
+  return (
+    <div className="flex items-center justify-between rounded-xl border border-border bg-card/70 px-4 py-3 text-sm">
+      <span className="text-foreground">{label}</span>
+      <span className="font-mono text-xs text-muted-foreground">{value}</span>
+    </div>
+  );
+}
+
+function MetricModal({ metric }: { metric: { value: string; label: string } }) {
+  const body =
+    metric.label === "Active Members" ? (
+      <>
+        {memberSkillGroups.map((g) => (
+          <div key={g.group} className="space-y-2">
+            <p className="font-mono text-[11px] tracking-[0.2em] text-research-alt">
+              {g.group.toUpperCase()} · {g.count}
+            </p>
+            {members
+              .filter((m) => m.domain === g.group)
+              .map((m) => (
+                <MetricRow key={m.name} label={m.name} value={m.title} />
+              ))}
+          </div>
+        ))}
+      </>
+    ) : metric.label === "Active Research Streams" ? (
+      <>
+        {["AI", "Quantum", "Distributed"].map((d) => (
+          <div key={d} className="space-y-2">
+            <p className="font-mono text-[11px] tracking-[0.2em] text-research-alt">
+              {d.toUpperCase()} SYSTEMS
+            </p>
+            {researchStreams
+              .filter((s) => s.domain === d)
+              .map((s) => (
+                <MetricRow key={s.name} label={s.name} value={s.lead} />
+              ))}
+          </div>
+        ))}
+      </>
+    ) : metric.label === "Deployments" ? (
+      <>
+        {deployments.map((d) => (
+          <MetricRow key={d.name} label={`${d.name} · ${d.trl}`} value={d.client} />
+        ))}
+      </>
+    ) : (
+      <>
+        {agencyBriefs.map((b) => (
+          <div key={b.org} className="rounded-xl border border-border bg-card/70 px-4 py-3">
+            <p className="text-sm font-semibold text-foreground">{b.org}</p>
+            <p className="mt-1 text-xs text-muted-foreground">{b.track}</p>
+            <span className="mt-2 inline-block rounded-full border border-agency/35 bg-agency/10 px-3 py-1 text-[11px] text-foreground">
+              {b.status}
+            </span>
+          </div>
+        ))}
+      </>
+    );
+
+  return (
+    <InfoModal
+      title={`${metric.value} ${metric.label}`}
+      description="Live breakdown from the collective's operating record."
+      triggerClassName="glass-card w-full px-4 py-5 text-center transition-transform hover:-translate-y-1 hover:shadow-[0_20px_50px_-30px] hover:shadow-research"
+      trigger={
+        <>
+          <span className="block font-display text-3xl font-bold text-foreground">
+            {metric.value}
+          </span>
+          <span className="mt-1 block text-xs tracking-wide text-muted-foreground">
+            {metric.label}
+          </span>
+        </>
+      }
+    >
+      {body}
+    </InfoModal>
+  );
+}
 
 export function Hero() {
   return (
@@ -82,28 +172,22 @@ export function Hero() {
           From cutting-edge research to production systems that scale.
         </p>
         <div className="mt-9 flex flex-wrap items-center justify-center gap-3">
-          <a
-            href="#collective"
-            className="rounded-full bg-gradient-to-r from-research-alt to-research px-6 py-3 text-sm font-semibold text-card shadow-[0_18px_40px_-20px] shadow-research-alt transition-transform hover:-translate-y-0.5"
-          >
-            Join the research network
-          </a>
-          <a
-            href="#services"
-            className="rounded-full border border-border bg-card/80 px-6 py-3 text-sm font-semibold text-foreground backdrop-blur transition-colors hover:bg-card"
-          >
-            Bring us a hard problem
-          </a>
+          <JoinModal
+            title="Join the research network"
+            trigger="Join the research network"
+            triggerClassName="rounded-full bg-gradient-to-r from-research-alt to-research px-6 py-3 text-sm font-semibold text-card shadow-[0_18px_40px_-20px] shadow-research-alt transition-transform hover:-translate-y-0.5"
+          />
+          <ClientBriefModal
+            trigger="Bring us a hard problem"
+            triggerClassName="rounded-full border border-border bg-card/80 px-6 py-3 text-sm font-semibold text-foreground backdrop-blur transition-colors hover:bg-card"
+          />
         </div>
 
-        <dl className="mx-auto mt-16 grid max-w-3xl grid-cols-2 gap-3 sm:grid-cols-4">
+        <div className="mx-auto mt-16 grid max-w-3xl grid-cols-2 gap-3 sm:grid-cols-4">
           {heroMetrics.map((m) => (
-            <div key={m.label} className="glass-card px-4 py-5 text-center">
-              <dt className="font-display text-3xl font-bold text-foreground">{m.value}</dt>
-              <dd className="mt-1 text-xs tracking-wide text-muted-foreground">{m.label}</dd>
-            </div>
+            <MetricModal key={m.label} metric={m} />
           ))}
-        </dl>
+        </div>
       </div>
     </section>
   );
