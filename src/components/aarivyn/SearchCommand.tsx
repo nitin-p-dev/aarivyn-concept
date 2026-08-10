@@ -95,7 +95,7 @@ export function SearchCommand() {
           </CommandGroup>
           <CommandGroup heading="Squads">
             {squads.map((s) => (
-              <CommandItem key={s.name} value={`${s.name} ${s.event}`} onSelect={() => go("lfg")}>
+              <CommandItem key={s.name} value={`${s.name} ${s.event}`} onSelect={() => go("hackathon")}>
                 {s.name}
                 <span className="ml-auto text-xs text-muted-foreground">{s.event}</span>
               </CommandItem>
@@ -107,4 +107,3 @@ export function SearchCommand() {
   );
 }
 
-export default sectionFor;
