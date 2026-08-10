@@ -1,5 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { AmbientCanvas } from "@/components/aarivyn/ParticleField";
+import { ThemeProvider } from "@/components/aarivyn/theme";
+
 import { Nav, Hero } from "@/components/aarivyn/Hero";
 import { Thesis, Lab } from "@/components/aarivyn/ThesisLab";
 import { Services } from "@/components/aarivyn/Services";
