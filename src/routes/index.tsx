@@ -7,7 +7,8 @@ import { Thesis, Lab } from "@/components/aarivyn/ThesisLab";
 import { Services } from "@/components/aarivyn/Services";
 import { Collective, Members } from "@/components/aarivyn/Collective";
 import { Forge, Hackathon } from "@/components/aarivyn/Forge";
-import { Gigs, Vault, SiteFooter } from "@/components/aarivyn/Vault";
+import { Gigs, Vault, CoreMembers, SiteFooter } from "@/components/aarivyn/Vault";
+import { Toaster } from "@/components/ui/sonner";
 
 const title = "AARIVYN ONE — Deep-tech research & delivery collective";
 const description =
@@ -43,8 +44,10 @@ function Index() {
         <Hackathon />
         <Gigs />
         <Vault />
+        <CoreMembers />
       </main>
       <SiteFooter />
+      <Toaster />
     </ThemeProvider>
   );
 }
