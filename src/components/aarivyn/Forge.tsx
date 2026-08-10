@@ -90,15 +90,19 @@ export function Hackathon() {
           copy="Squads forming now. Bring a skill, take a seat, ship in 48 hours."
           accent="agency"
         />
-        <div className="mt-14 grid gap-6 md:grid-cols-3">
+        <div className="mt-14 grid gap-6 md:grid-cols-2 lg:grid-cols-4">
           {squads.map((s, i) => (
             <article
-              key={s.event}
+              key={s.name}
               className="glass-card p-6 hover:-translate-y-1"
-              style={{ transform: `translateY(${i * 10}px)` }}
+              style={{ transform: `translateY(${(i % 2) * 14}px)` }}
             >
-              <h3 className="text-lg font-semibold text-foreground">{s.event}</h3>
-              <p className="mt-2 text-sm text-muted-foreground">Needs: {s.need}</p>
+              <h3 className="text-lg font-semibold text-foreground">{s.name}</h3>
+              <p className="mt-1 font-mono text-[11px] tracking-[0.18em] text-muted-foreground">
+                {s.event.toUpperCase()}
+              </p>
+              <p className="mt-3 text-sm text-muted-foreground">Needs: {s.need}</p>
+
               <p className="mt-1 font-mono text-xs text-agency">{s.slots}</p>
               <button className="mt-6 w-full rounded-full bg-gradient-to-r from-agency to-agency-alt px-5 py-2.5 text-sm font-semibold text-card transition-transform hover:-translate-y-0.5">
                 Join Squad
