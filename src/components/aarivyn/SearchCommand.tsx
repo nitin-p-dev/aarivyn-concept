@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/command";
 import { resources, members, forgeNodes, labProjects, bounties, squads } from "@/data/aarivyn";
 
-const sectionFor: Record<string, string> = {};
+
 
 export function SearchCommand() {
   const [open, setOpen] = useState(false);

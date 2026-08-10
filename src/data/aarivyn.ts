@@ -96,10 +96,32 @@ export const forgeNodes = [
 ];
 
 export const squads = [
-  { event: "QuantumHack 2025", need: "Cryptography + Rust", slots: "2 of 5 seats open" },
-  { event: "Edge AI Buildathon", need: "Embedded CV + CUDA", slots: "3 of 6 seats open" },
-  { event: "Decentralized Systems Hack", need: "Consensus + Go", slots: "1 of 4 seats open" },
+  {
+    name: "Qubit Wranglers",
+    event: "QuantumHack 2025",
+    need: "Cryptography + Rust",
+    slots: "2 of 5 seats open",
+  },
+  {
+    name: "Entangled States",
+    event: "QuantumHack 2025",
+    need: "Quantum Simulation + Python",
+    slots: "2 of 4 seats open",
+  },
+  {
+    name: "Edge Runners",
+    event: "Edge AI Buildathon",
+    need: "Embedded CV + CUDA",
+    slots: "3 of 6 seats open",
+  },
+  {
+    name: "Byzantine Generals",
+    event: "Decentralized Systems Hack",
+    need: "Consensus + Go",
+    slots: "1 of 4 seats open",
+  },
 ];
+
 
 export const bounties = [
   { amount: "$4,500", title: "CUDA kernel optimisation", scope: "Performance", days: "12 days left" },
