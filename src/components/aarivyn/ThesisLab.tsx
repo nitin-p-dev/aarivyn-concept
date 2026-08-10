@@ -1,5 +1,6 @@
-import { pillars, labProjects } from "@/data/aarivyn";
+import { pillars, labProjects, pillarDossiers } from "@/data/aarivyn";
 import { Section, SectionHeading } from "./Section";
+import { InfoModal } from "./modals";
 
 function IsoCity() {
   return (
@@ -56,15 +57,38 @@ export function Thesis() {
             talent that executes with precision, and delivery mechanisms that scale impact.
           </p>
           <div className="mt-8 grid gap-4">
-            {pillars.map((p, i) => (
-              <div key={p.title} className="glass-card flex gap-4 p-5">
-                <span className="font-mono text-xs text-research-alt">0{i + 1}</span>
-                <div>
-                  <h3 className="text-base font-semibold text-foreground">{p.title}</h3>
-                  <p className="mt-1 text-sm text-muted-foreground">{p.copy}</p>
-                </div>
-              </div>
-            ))}
+            {pillars.map((p, i) => {
+              const dossier = pillarDossiers[p.title];
+              return (
+                <InfoModal
+                  key={p.title}
+                  title={`${p.title} dossier`}
+                  description={dossier?.summary}
+                  triggerClassName="glass-card flex w-full gap-4 p-5 text-left transition-transform hover:-translate-y-1"
+                  trigger={
+                    <>
+                      <span className="font-mono text-xs text-research-alt">0{i + 1}</span>
+                      <span className="block">
+                        <span className="block text-base font-semibold text-foreground">
+                          {p.title}
+                        </span>
+                        <span className="mt-1 block text-sm text-muted-foreground">{p.copy}</span>
+                      </span>
+                    </>
+                  }
+                >
+                  {(dossier?.points ?? []).map((pt) => (
+                    <div
+                      key={pt}
+                      className="flex gap-3 rounded-xl border border-border bg-card/70 px-4 py-3 text-sm text-muted-foreground"
+                    >
+                      <span className="mt-2 h-1 w-1 shrink-0 rounded-full bg-research" />
+                      {pt}
+                    </div>
+                  ))}
+                </InfoModal>
+              );
+            })}
           </div>
         </div>
       </div>
