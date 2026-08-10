@@ -67,7 +67,23 @@ export function Forge() {
               </div>
               <h3 className="mt-3 text-base font-semibold text-foreground">{n.name}</h3>
               <p className="mt-2 text-xs text-muted-foreground">{n.collaborators} collaborators</p>
-              <div className="mt-4 h-20 rounded-lg border border-dashed border-research/35 bg-gradient-to-br from-research/10 to-agency/10" />
+              <div className="relative mt-4 h-20 overflow-hidden rounded-lg border border-dashed border-research/35 bg-gradient-to-br from-research/10 to-agency/10">
+                <svg viewBox="0 0 200 80" className="h-full w-full" aria-hidden="true">
+                  <g
+                    fill="none"
+                    stroke="color-mix(in oklab, var(--research) 55%, transparent)"
+                    strokeWidth="1"
+                  >
+                    <path d="M10 60 H60 V25 H110 V55 H165 V18" />
+                    <path d="M25 12 V40 H85 V70 H150" opacity="0.6" />
+                    <circle cx="60" cy="25" r="2.5" />
+                    <circle cx="110" cy="55" r="2.5" />
+                    <circle cx="85" cy="40" r="2.5" />
+                    <rect x="140" y="30" width="26" height="16" rx="2" opacity="0.7" />
+                  </g>
+                </svg>
+              </div>
+
             </article>
           ))}
         </div>
@@ -90,15 +106,19 @@ export function Hackathon() {
           copy="Squads forming now. Bring a skill, take a seat, ship in 48 hours."
           accent="agency"
         />
-        <div className="mt-14 grid gap-6 md:grid-cols-3">
+        <div className="mt-14 grid gap-6 md:grid-cols-2 lg:grid-cols-4">
           {squads.map((s, i) => (
             <article
-              key={s.event}
+              key={s.name}
               className="glass-card p-6 hover:-translate-y-1"
-              style={{ transform: `translateY(${i * 10}px)` }}
+              style={{ transform: `translateY(${(i % 2) * 14}px)` }}
             >
-              <h3 className="text-lg font-semibold text-foreground">{s.event}</h3>
-              <p className="mt-2 text-sm text-muted-foreground">Needs: {s.need}</p>
+              <h3 className="text-lg font-semibold text-foreground">{s.name}</h3>
+              <p className="mt-1 font-mono text-[11px] tracking-[0.18em] text-muted-foreground">
+                {s.event.toUpperCase()}
+              </p>
+              <p className="mt-3 text-sm text-muted-foreground">Needs: {s.need}</p>
+
               <p className="mt-1 font-mono text-xs text-agency">{s.slots}</p>
               <button className="mt-6 w-full rounded-full bg-gradient-to-r from-agency to-agency-alt px-5 py-2.5 text-sm font-semibold text-card transition-transform hover:-translate-y-0.5">
                 Join Squad

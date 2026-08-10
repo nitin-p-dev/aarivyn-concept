@@ -1,5 +1,8 @@
+import { Moon, Sun } from "lucide-react";
 import { ParticleField } from "./ParticleField";
 import { heroMetrics } from "@/data/aarivyn";
+import { SearchCommand } from "./SearchCommand";
+import { useTheme } from "./theme";
 
 const links = [
   { href: "#thesis", label: "Thesis" },
@@ -10,17 +13,30 @@ const links = [
   { href: "#vault", label: "Vault" },
 ];
 
+function ThemeToggle() {
+  const { theme, toggle } = useTheme();
+  return (
+    <button
+      onClick={toggle}
+      aria-label={theme === "dark" ? "Switch to light theme" : "Switch to dark theme"}
+      className="inline-flex h-8 w-8 items-center justify-center rounded-full border border-border bg-card/70 text-muted-foreground backdrop-blur transition-colors hover:text-foreground"
+    >
+      {theme === "dark" ? <Moon className="h-4 w-4" /> : <Sun className="h-4 w-4" />}
+    </button>
+  );
+}
+
 export function Nav() {
   return (
     <header className="sticky top-0 z-40 border-b border-border/70 bg-background/70 backdrop-blur-xl">
-      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-6">
+      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between gap-4 px-6">
         <a href="#top" className="flex items-center gap-2.5">
           <span className="h-6 w-6 rounded-md bg-gradient-to-br from-research to-research-alt" />
           <span className="font-display text-sm font-bold tracking-[0.22em] text-foreground">
             AARIVYN ONE
           </span>
         </a>
-        <nav className="hidden items-center gap-7 md:flex">
+        <nav className="hidden items-center gap-7 lg:flex">
           {links.map((l) => (
             <a
               key={l.href}
@@ -31,16 +47,21 @@ export function Nav() {
             </a>
           ))}
         </nav>
-        <a
-          href="#services"
-          className="rounded-full bg-foreground px-4 py-2 text-xs font-semibold tracking-wide text-background transition-opacity hover:opacity-90"
-        >
-          Bring us a problem
-        </a>
+        <div className="flex items-center gap-2">
+          <SearchCommand />
+          <ThemeToggle />
+          <a
+            href="#services"
+            className="hidden rounded-full bg-foreground px-4 py-2 text-xs font-semibold tracking-wide text-background transition-opacity hover:opacity-90 sm:inline-block"
+          >
+            Bring us a hard problem
+          </a>
+        </div>
       </div>
     </header>
   );
 }
+
 
 export function Hero() {
   return (
