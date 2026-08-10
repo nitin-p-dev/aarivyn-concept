@@ -81,9 +81,9 @@ export function ModalShell({
   children,
 }: {
   trigger: ReactNode;
-  triggerClassName?: string;
+  triggerClassName?: string | undefined;
   title: string;
-  description?: string;
+  description?: string | undefined;
   children: (close: () => void) => ReactNode;
 }) {
   const [open, setOpen] = useState(false);
@@ -108,7 +108,7 @@ export function JoinModal({
   title = "Join AARIVYN",
 }: {
   trigger: ReactNode;
-  triggerClassName?: string;
+  triggerClassName?: string | undefined;
   title?: string;
 }) {
   const [skills, setSkills] = useState<string[]>([]);
@@ -188,8 +188,8 @@ export function ClientBriefModal({
   defaultScope,
 }: {
   trigger: ReactNode;
-  triggerClassName?: string;
-  defaultScope?: string;
+  triggerClassName?: string | undefined;
+  defaultScope?: string | undefined;
 }) {
   return (
     <ModalShell
@@ -256,12 +256,12 @@ export function ApplyModal({
   roles,
 }: {
   trigger: ReactNode;
-  triggerClassName?: string;
+  triggerClassName?: string | undefined;
   title: string;
-  description?: string;
+  description?: string | undefined;
   channel: string;
   context: Record<string, unknown>;
-  roles?: string[];
+  roles?: string[] | undefined;
 }) {
   const [picked, setPicked] = useState<string[]>([]);
   return (
@@ -334,9 +334,9 @@ export function InfoModal({
   children,
 }: {
   trigger: ReactNode;
-  triggerClassName?: string;
+  triggerClassName?: string | undefined;
   title: string;
-  description?: string;
+  description?: string | undefined;
   children: ReactNode;
 }) {
   return (
