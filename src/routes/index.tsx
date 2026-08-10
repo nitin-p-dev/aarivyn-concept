@@ -27,7 +27,7 @@ export const Route = createFileRoute("/")({
 
 function Index() {
   return (
-    <>
+    <ThemeProvider>
       <AmbientCanvas />
       <Nav />
       <main>
@@ -43,6 +43,7 @@ function Index() {
         <Vault />
       </main>
       <SiteFooter />
-    </>
+    </ThemeProvider>
   );
 }
+
